@@ -72,4 +72,4 @@ pairs(~TV+Radio+Newspaper+Sales,data=advertising,
       col = sample(color_palette, 1))
 
 dev.off() 
-
+g
