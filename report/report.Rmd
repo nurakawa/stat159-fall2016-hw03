@@ -9,13 +9,6 @@ output: pdf_document
 
 One solution is to fit a Simple Linear Regression for each predictor. This would result in the following tables:
 
-```{r}
-#read in advertising data
-
-setwd()
-advertising <- read.csv()
-
-```
 
 
 
