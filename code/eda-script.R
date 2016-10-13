@@ -27,21 +27,24 @@ color_palette <- colorRampPalette(c("black", "grey"))(35)
 
 #--------------------------------------------------------------------------------------------------------
 # generating histograms
+
+
 for(var in adv_variables)
 {
   filename = paste0(envpath,"/images/histogram-", tolower(var), ".png")
-  print(var)
+  #print(var)
   
   png(file = filename)
-  
   hist(advertising[,var],
        main = paste("Histogram of ", var),
        xlab = "Units",
        col = sample(color_palette, 1))
   dev.off()
-  
-  print(paste("Saved File", filename))
+  rm(filename)
+  #print(paste("Saved File", filename))
 }
+
+
 
 
 #--------------------------------------------------------------------------------------------------------
