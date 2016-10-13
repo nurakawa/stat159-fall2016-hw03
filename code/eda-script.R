@@ -23,19 +23,23 @@ advertising <- read.csv(paste0(envpath, "/data/Advertising.csv"))[,-1] #remove a
 adv_variables <- colnames(advertising)
 
 # creating a color palette
-color_palette <- colorRampPalette(c("black", "grey", "magenta"))(35) 
+color_palette <- colorRampPalette(c("black", "grey"))(35) 
 
 #--------------------------------------------------------------------------------------------------------
 # generating histograms
 for(var in adv_variables)
 {
   filename = paste0(envpath,"/images/histogram-", tolower(var), ".png")
+  print(var)
+  
   png(file = filename)
+  
   hist(advertising[,var],
        main = paste("Histogram of ", var),
        xlab = "Units",
        col = sample(color_palette, 1))
   dev.off()
+  
   print(paste("Saved File", filename))
 }
 
@@ -72,4 +76,4 @@ pairs(~TV+Radio+Newspaper+Sales,data=advertising,
       col = sample(color_palette, 1))
 
 dev.off() 
-g
+
