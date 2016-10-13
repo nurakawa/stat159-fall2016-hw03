@@ -1,0 +1,42 @@
+---
+title: "Multiple Linear Regression"
+author: "Nura Kawa"
+date: "October 12, 2016"
+output: pdf_document
+---
+
+#Introduction
+
+One solution is to fit a Simple Linear Regression for each predictor. This would result in the following tables:
+
+```{r}
+#read in advertising data
+
+setwd()
+advertising <- read.csv()
+
+```
+
+
+
+
+
+
+A Multiple Linear Regression model extends the Simple Linear Regression model to accomodate more predictors for a single response variable. Recall the Linear Regression model we have previously encountered:
+
+$$Y = \beta_0 + \beta_1X + \epsilon$$,
+
+where $Y$ is our response variable, $X$ is our predictor, $\epsilon$ is random noise, and the beta coefficients are the intercept and slope of our linear model, respectively.
+
+The Multiple Linear Regression model is:
+
+$$Y = \beta_0 + \beta_1X_1 + \beta_2X_2 + ... + \beta_nX_n + \epsilon$$,
+
+where $X_j$ represents the $jth$ predictor and $\beta_j$ quantifies the association between that variable and the response.
+
+Specifically, out Multiple Linear Regression model is the following:
+
+$$\textbf{sales} = \beta_0 + \beta_1\textbf{TV} + \beta_2\textbf{radio} + \beta_3\textbf{newspaper} + \epsilon$$.
+
+
+
