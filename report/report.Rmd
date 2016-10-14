@@ -2,7 +2,10 @@
 title: "Multiple Linear Regression"
 author: "Nura Kawa"
 date: "October 12, 2016"
-output: pdf_document
+output:
+  pdf_document:
+    fig_caption: true
+sansfont: Calibri Light
 ---
 
 #Introduction
@@ -10,9 +13,27 @@ output: pdf_document
 One solution is to fit a Simple Linear Regression for each predictor. This would result in the following tables:
 
 
+__Figure 1__ Simple Regression Models for the _Advertising_ dataset. The three tables below show coefficients of the linear regression models of Sales regressed onto Radio, Newspaper, and TV, respectively.
+
+```{r regression output xtable, results="asis", message=F, warning=F, echo=F}
+envpath <- "C:/Users/Nura/Desktop/stat159-fall2016-hw03"
+source(paste0(envpath, "/code/regression-script.R"))
+library(xtable)
+radio_reg_table <- xtable(lm(Sales~Radio, data = advertising),
+                          caption = "Simple Regression of Sales on Radio")
+print(radio_reg_table, type="latex", comment = F)
+cat("\n\n")
+newspaper_reg_table <- xtable(lm(Sales~Newspaper, data = advertising),
+                              caption = "Simple Regression of Sales on Newspaper")
+print(newspaper_reg_table, type="latex", comment = F)
+
+cat("\n\n")
+tv_reg_table <- xtable(lm(Sales~TV, data = advertising),
+                              caption = "Simple Regression of Sales on TV")
+print(tv_reg_table, type="latex", comment = F)
 
 
-
+```
 
 
 A Multiple Linear Regression model extends the Simple Linear Regression model to accomodate more predictors for a single response variable. Recall the Linear Regression model we have previously encountered:
@@ -29,7 +50,62 @@ where $X_j$ represents the $jth$ predictor and $\beta_j$ quantifies the associat
 
 Specifically, out Multiple Linear Regression model is the following:
 
-$$\textbf{sales} = \beta_0 + \beta_1\textbf{TV} + \beta_2\textbf{radio} + \beta_3\textbf{newspaper} + \epsilon$$.
+$$\textbf{sales} = \beta_0 + \beta_1\textbf{TV} + \beta_2\textbf{radio} + \beta_3\textbf{newspaper} + \epsilon$$.  
+
+#Fitting a Multiple Linear Regression Model
+
+##Hypothesis Testing
+
+$H_0$: $\beta_1 = \beta_2 = ... = \beta_p = 0$
+$H_a$: at least one $\beta_j$ is non-zero
 
 
+##Computing Coefficients
 
+__Residual Sum of Squares (RSS)__
+$$RSS = \sum(y_1 - \hat{y_i})^2$$
+
+__Total Sum of Squares (TSS)__
+$$TSS = \sum(y_1 - \bar{y})^2$$
+
+__R-Squared__
+$$ R^2 = \frac{(TSS - RSS)}{TSS} $$
+
+__F-Statistic__
+$$F = \frac{(TSS - RSS)/p}{RSS/(n-p-1}$$ 
+
+__Residual Standard Error__
+$$RSE = \sqrt{\frac{1}{n-2}\sum{(y_i - \hat{y_i})^2}}$$
+
+__Figure 2__ Multiple Linear Regression Coefficients__
+
+```{r multiple regression output xtable, results="asis", message=F, warning=F, echo=F}
+multiple_reg_table <- xtable(lm(Sales~., data = advertising),
+                          caption = "Multiple Linear Regression of Sales onto Radio, TV, and Newspaper")
+print(multiple_reg_table, type="latex", comment = F)
+```
+
+
+__Figure 3__ Correlation matrix for TV, radio, newspaper, and sales for the _Advertising_ dataset.
+
+```{r correlation matrix output xtable, results="asis", message=F, warning=F, echo=F}
+cor_table <- xtable(cor(advertising))
+#                          caption = "Multiple Linear Regression of Sales onto Radio, TV, and Newspaper")
+print(cor_table, type="latex", comment = F)
+```
+
+
+__Figure 4__ More information about the least squares model for the regression of number of units sold on TV, newspaper, and radio advertising budgets in the _Advertising_ dataset.
+
+```{r multiple lin reg model output xtable, results="asis", message=F, warning=F, echo=F}
+source(paste0(envpath, "/code/functions/regression-functions.R"))
+op_table <- data.frame("Quantity" = c("Residual Standard Error",
+                          "R-Squared",
+                          "F-Statistic"),
+           "Value" = c(residual_std_error(reg),
+                       r_squared(reg),
+                       f_statistic(reg)))
+
+op_table <- xtable(op_table, caption = "Multiple Linear Regression Coefficients")
+print(op_table, type = "latex", comment = F, include.rownames=F, include.colnames = T)
+```
