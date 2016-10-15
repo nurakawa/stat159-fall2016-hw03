@@ -12,8 +12,10 @@
 #
 #========================================================================================================
 
-envpath <- "C:/Users/Nura/Desktop/stat159-fall2016-hw03"
-source(paste0(envpath, "/code/regression-script.R"))
+#envpath <- "C:/Users/Nura/Desktop/stat159-fall2016-hw03/code/functions/"
+#setwd(envpath)
+
+source("../scripts/regression-script.R")
 
 # lm() and summary() objects
 reg <- lm(Sales~., data = advertising)

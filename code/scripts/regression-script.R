@@ -13,8 +13,8 @@
 #========================================================================================================
 
 # read in data
-#envpath <- "C:/Users/Nura/Desktop/stat159-fall2016-hw03/code/scripts"
-#setwd(envpath)
+envpath <- "C:/Users/Nura/Desktop/stat159-fall2016-hw03/code/scripts/"
+setwd(envpath)
 
 advertising <- read.csv("../../data/Advertising.csv")[,-1] #remove additional X column
 
@@ -71,8 +71,6 @@ for(predictor in predictors) #iterate through all three predictors
   rm(filename)
   
 }
-
-print("Regression Script Complete.")
 
 
 
