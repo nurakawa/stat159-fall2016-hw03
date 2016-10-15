@@ -7,18 +7,18 @@ description:  a .csv file containing data on sales and on various media advertis
   
 
 __eda-output.txt__  
-source:  
+source:  eda-script.R
 authors: Nura Kawa  
-description:  
+description: this is text output of our eda, which includes summary statistics of our data and a correlation matrix.  
   
 
 __correlation_matrix.RData__  
-source:
+source: eda-script.R
 authors: Nura Kawa  
-description:  
+description:  this is a binary form of our correlation matrix.
 
   
 __regression.RData__  
-source:  
+source:  regression-script.R
 authors: Nura Kawa  
-description:  
+description:  This contains a regression object and the summary of that regression object.
