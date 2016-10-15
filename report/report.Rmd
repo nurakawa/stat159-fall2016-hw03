@@ -94,13 +94,9 @@ As with simple linear models, we first test hypotheses, namely:
 
 
 ##Hypothesis Testing
-Our _null hypothesis_ $H_0$ is:
+Our _null hypothesis_ $H_0$ is: $H_0$: $\beta_1 = \beta_2 = ... = \beta_p = 0$  
 
-$H_0$: $\beta_1 = \beta_2 = ... = \beta_p = 0$  
-
-Our _alternative hypothesis_ $H_a$ is:  
-
-$H_a$: at least one $\beta_j$ is non-zero
+Our _alternative hypothesis_ $H_a$ is: $H_a$: at least one $\beta_j$ is non-zero
 
 Simply put, we assume the null hypothesis of each predictor having no influence on Sales, and test to see if at least one predictor has an association with Sales. We set our p-value to be 0.05, meaning that anything below this would allow us to reject our null hypothesis.
 
@@ -131,10 +127,26 @@ $$RSE = \sqrt{\frac{1}{n-2}\sum{(y_i - \hat{y_i})^2}}$$
 __F-Statistic__  
 This is our test statistic: Allowing _p_ to be the number of predictors and _n_ to be the number of observations, we have:  
 
-$$F = \frac{(TSS - RSS)/p}{RSS/(n-p-1}$$ 
+$$F = \frac{(TSS - RSS)/p}{RSS/(n-p-1)}$$ 
+
+##Model Selection
+Now that we have discussed how to fit the model, we also need to pay attention to model selection. In cases where we have many predictors, using all predictors may not always be ideal. Our goal of a good model is to __minimize our p-value__ and to __minimize RSS__. The following three methods allow us to select a model that approaches our goals.  
+
+###Forward selection
+We begin with a model that has only intercept terms. We iteratively fit all _p_ (where _p_ is number of predictors) possible Simple Linear Regression models, measure our RSS, and then add the variable that minimizes the RSS, until we reach our stopping point. 
+
+###Backward selection
+This is the same as Forward Selection, but we begin with _all_ predictors and iteratively remove the predictors that yield the largest p-value.
+
+###Mixed selection
+This method combines the previous two. We first forward select, then, if the p-value becomes too large due to the addition of one variable, we remove that variable from our model. This iterative method has the goal of dually minimizing RSS and the p-value. This may not result in the optimum of either, but allows one to balance out the negatives of both forward and backward selection.
+
+To assess __model accuracy__, we can also look at the $R^2$ and the RSE coefficients, which are explained previously.
 
 
 #Results
+
+We fit a Multiple Linear Regression model on the _Advertising_ data, using TV, Radio, and Newspaper to predict Sales. The results are shown below:
 
 __Figure 3__ Multiple Linear Regression Coefficients__
 
@@ -236,6 +248,23 @@ print(op_table, type = "latex", comment = F, include.rownames=F, include.colname
 ```
 
 
+##Checking Model Assumptions
+
+The Multiple Linear Regression Model assumes __independent predictors__, __normally distributed variables__, and __constant variance__.
+
+
+The images below are part of an evaluation of our Model. The __QQ-Plot__ checks the assumption of normality. We see that our valus are indeed normally distributed, as they fit the theoretical quantiles.   The _residuals_, or the difference between the actual values of _y_ and our predicted values, $\hat{y}$, are interesting to look at. Namely, __it is important that we check whether there exists a non-linear relationship in our data__. We look at the _heteroschedasticity_ of our residuals - whether or not they display a pattern. 
+
+![](../images/normal-qq-plot.png){width=300px} ![](../images/residual-plot.png){width=300px}
+
+
+Our residuls show a non-linear (nearly quadratic) pattern by the curve of the red line, meaning that perhaps a different model could better explain the data. 
+
+##Checking our Model Fit
+
+Like in Simple Linear Regression, we look at the $R^2$. Our value of 0.9 is very good and indicates a much better-fitting model than the Simple Linear Model with TV used in a previous paper. To interpret an __F-Statistic__ we look at its size - since this is a ratio, we hope for a value larger than 1. We have 570.27) reveals that this model is useful because a relationship definitely exists between our dependent and independent variables. Our __RSE__ is not too large to discredit the model, meaning that it is a good fit.  
+
+Now we look at __p-values__. Ourp-values are very low for all predictors but Newspaper, meaning that we could leave out Newspaper and perhaps get a better fit. Thus we can __reject the null hypothesis__: at least one predictor has an association with our response, Sales. 
+
 #Conclusion
-
-
+We fit a Multiple Linear Regression model and found that for all predictors but Newspaper very small p-values, allowing us to reject our null hypothesis: at least one predictor has a positive association. Specfically, TV and Radio have positive association with Sales. However, this model is not perfect; we see that our residuals are heteroschedastic, meaning that variance of the residuals is not constant. There appears to be an underlying non-linear relationship in our Sales predictor that cannot be explained by a linear model. Thus, while we have progressed in fitting a model to our _Advertising_ dataset, we must continue trying different methods to get an optimal prediction.
